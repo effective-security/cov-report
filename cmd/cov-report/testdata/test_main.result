@@ -5,5 +5,5 @@ uncovered: 98
 excluded:  
 result:    46.7%
 
-Top uncovered source files [name, covered %, uncovered count, total uncovered %]
- github.com/go-phorce/cov-report/coverage.go  19.7%    98   80.3%
+Top uncovered source files [name, covered %, uncovered count, uncovered %, total uncovered %]
+ github.com/go-phorce/cov-report/coverage.go  19.7%    98   80.3%  53.3%

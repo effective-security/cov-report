@@ -168,10 +168,6 @@ func (a *coverageAccumulator) result(numTopUncovered int) *coverageResult {
 		ResultFormatted:     fmt.Sprintf("%.1f%%", pc),
 		TopUncovered:        a.files[:min(len(a.files), numTopUncovered)],
 	}
-
-	sort.Slice(r.TopUncovered, func(i, j int) bool {
-		return int(r.TopUncovered[i].UncoveredPct) > int(r.TopUncovered[j].UncoveredPct)
-	})
 	return &r
 }
 
