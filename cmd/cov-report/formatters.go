@@ -98,15 +98,18 @@ func txtFormatter(w io.Writer, r *coverageResult) {
 	fmt.Fprintf(w, "Statements\ntotal:     %d\ncovered:   %d\nuncovered: %d\nexcluded:  %v\nresult:    %v\n",
 		r.Total, r.Covered, r.Uncovered, strings.Join(r.ExcludedSources, ","), r.ResultFormatted)
 	if len(r.TopUncovered) > 0 {
-		fmt.Fprintf(w, "\nTop uncovered source files [name, covered %%, uncovered count, total uncovered %%]\n")
+		fmt.Fprintf(w, "\nTop uncovered source files [name, covered %%, uncovered count, uncovered %%, total uncovered %%]\n")
 		longestFilename := longestFilename(r.TopUncovered)
 		for _, fr := range r.TopUncovered {
-			fmt.Fprintf(w, " %s%s  %4.1f%% %5d   %4.1f%%\n",
+			uncoveredPct := 100 * float32(fr.Uncovered) / float32(r.Total)
+			fmt.Fprintf(w, " %s%s  %4.1f%% %5d   %4.1f%%  %4.1f%%\n",
 				fr.Filename,
 				strings.Repeat(" ", longestFilename-len(fr.Filename)),
 				fr.CoveredPct,
 				fr.Uncovered,
-				fr.UncoveredPct)
+				fr.UncoveredPct,
+				uncoveredPct,
+			)
 		}
 	}
 }
