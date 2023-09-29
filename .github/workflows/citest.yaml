@@ -85,15 +85,9 @@ jobs:
           go mod download
           go mod tidy
 
-      - name: Go tools
-        if: steps.go-build-cache.outputs.cache-hit != 'true'
-        shell: bash
-        run: |
-          make tools build
-
       - name: CovTest
         run: |
-          make covtest
+          make build covtest
 
       - name: Report CovTest
         if: github.event_name == 'pull_request'
@@ -108,4 +102,5 @@ jobs:
           GIT_USER: ${{ github.actor }}
 
       - name: Lint
-        run: make fmt-check lint
+        if: github.event_name == 'pull_request'
+        run: make tools fmt-check lint
